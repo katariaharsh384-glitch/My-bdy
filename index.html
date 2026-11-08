@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Surprise for Sonam 🌹</title>
+
+<style>
+* { box-sizing:border-box; }
+
+body {
+ margin:0;
+ min-height:100vh;
+ background:radial-gradient(circle at top,#42101d,#100609 65%);
+ color:#fff0e9;
+ font-family:Georgia,serif;
+ text-align:center;
+ overflow-x:hidden;
+}
+
+.container {
+ width:92%;
+ max-width:760px;
+ margin:40px auto;
+ padding:25px 20px;
+}
+
+h1 {
+ color:#f3b1bb;
+ font-size:clamp(30px,7vw,46px);
+ font-weight:normal;
+}
+
+.subtitle {
+ color:#e3a4ad;
+ letter-spacing:2px;
+ font-size:13px;
+ margin-top:5px;
+}
+
+.rose {
+ position:fixed;
+ top:-30px;
+ font-size:22px;
+ animation:fall linear infinite;
+ pointer-events:none;
+ z-index:0;
+}
+
+@keyframes fall {
+ to { transform:translateY(110vh) rotate(360deg); }
+}
+
+.content {
+ position:relative;
+ z-index:2;
+}
+
+.cake, .candle {
+ font-size:85px;
+ margin:25px 0 15px;
+ cursor:pointer;
+ transition:.3s;
+}
+
+button {
+ background:#8e1837;
+ border:1px solid #d98a9b;
+ color:white;
+ padding:13px 26px;
+ border-radius:30px;
+ font-size:15px;
+ cursor:pointer;
+ margin:10px;
+ transition:.2s;
+}
+
+button:active {
+ transform:scale(0.96);
+}
+
+.timer-box {
+ margin:25px 0;
+ font-size:22px;
+ color:#f2a6b4;
+ letter-spacing:1.5px;
+ background:rgba(0,0,0,0.3);
+ padding:15px;
+ border-radius:12px;
+ border:1px solid rgba(217,138,155,0.25);
+}
+
+#letter {
+ display:none;
+ margin-top:30px;
+ padding:25px;
+ background:rgba(255,255,255,.06);
+ border:1px solid #87354a;
+ border-radius:18px;
+ text-align:left;
+ box-shadow:0 10px 40px #0008;
+}
+
+#letter h2 {
+ text-align:center;
+ color:#f2a6b4;
+ font-weight:normal;
+ margin-bottom:15px;
+}
+
+#message {
+ white-space:pre-wrap;
+ line-height:1.9;
+ font-size:16px;
+ color:#f9dce0;
+}
+
+.signature {
+ text-align:right;
+ color:#f0a2b2;
+ margin-top:25px;
+ font-size:15px;
+}
+
+.hidden { display:none; }
+
+footer {
+ color:#b7838c;
+ margin-top:40px;
+ font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container content">
+
+  <!-- STEP 0: 18 NOV LOCK -->
+  <div id="lockScreen">
+    <h1>Wait for It, Sonam 🌹</h1>
+    <p class="subtitle">A SURPRISE IS BLOOMING FOR 18TH NOVEMBER</p>
+    <div class="timer-box" id="timer">Loading...</div>
+    <p style="font-size:14px; color:#d98a9b;">This page unlocks on your birthday! ✨</p>
+    <!-- Sirf tere test karne ke liye chhota bypass button -->
+    <button style="background:none; border:none; color:#703541; font-size:11px; text-decoration:underline;" onclick="unlockSurprise()">Preview / Test</button>
+  </div>
+
+  <!-- STEP 1: CANDLE BLOW -->
+  <div id="candleScreen" class="hidden">
+    <h1>Make a Wish, Sonam ✨</h1>
+    <p class="subtitle">CLOSE YOUR EYES & MAKE A WISH</p>
+    <div class="candle" id="candleIcon" onclick="blowCandle()">🕯️</div>
+    <p id="candleInstruction">Tap the candle to blow it out 🎂</p>
+    <button id="candleBtn" onclick="blowCandle()">Blow the Candle 💨</button>
+  </div>
+
+  <!-- STEP 2: CAKE CUTTING -->
+  <div id="cakeScreen" class="hidden">
+    <h1>Happy Birthday, Sonam 🌹</h1>
+    <p class="subtitle">A LITTLE SURPRISE FOR SOMEONE SPECIAL</p>
+    <div class="cake" id="cake" onclick="cutCake()">🎂</div>
+    <p id="cakeInstruction">Tap the cake or click below to cut 🍰</p>
+    <button id="cutBtn" onclick="cutCake()">Cut your birthday cake 🎂</button>
+  </div>
+
+  <!-- STEP 3: LETTER -->
+  <section id="letter">
+    <h2>A Little Letter For You 💌</h2>
+    <div id="message">Happy Birthday, Sonam! ❤️
+
+May your life always be filled with happiness,
+beautiful memories and countless reasons to smile.
+
+You deserve all the wonderful things life has to offer.
+
+Keep smiling and have the most beautiful year ahead. 🌹</div>
+
+    <div class="signature">
+      With warm wishes ❤️<br>
+      — Harsh
+    </div>
+  </section>
+
+  <footer>
+    Made with a little extra thought 🌹
+  </footer>
+
+</div>
+
+<script>
+// 1. DATE LOCK SETUP (18 Nov)
+const targetTime = new Date('November 18, 2026 00:00:00').getTime();
+
+function updateTimer() {
+  const now = new Date().getTime();
+  const diff = targetTime - now;
+
+  if (diff <= 0) {
+    unlockSurprise();
+  } else {
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((diff % (1000 * 60)) / 1000);
+    document.getElementById("timer").innerText = `${d}d : ${h}h : ${m}m : ${s}s left`;
+  }
+}
+const interval = setInterval(updateTimer, 1000);
+updateTimer();
+
+function unlockSurprise() {
+  clearInterval(interval);
+  document.getElementById("lockScreen").classList.add("hidden");
+  document.getElementById("candleScreen").classList.remove("hidden");
+}
+
+// 2. CANDLE BLOW ACTION
+function blowCandle() {
+  document.getElementById("candleIcon").innerHTML = "💨";
+  document.getElementById("candleInstruction").innerHTML = "Wish granted! Getting your cake... ✨";
+  document.getElementById("candleBtn").style.display = "none";
+
+  setTimeout(() => {
+    document.getElementById("candleScreen").classList.add("hidden");
+    document.getElementById("cakeScreen").classList.remove("hidden");
+  }, 1200);
+}
+
+// 3. CAKE CUT ACTION
+function cutCake() {
+  document.getElementById("cake").innerHTML = "🍰";
+  document.getElementById("cakeInstruction").innerHTML = "Yay! Happy Birthday! ❤️";
+  document.getElementById("cutBtn").style.display = "none";
+  document.getElementById("letter").style.display = "block";
+
+  document.getElementById("letter").scrollIntoView({ behavior: "smooth" });
+}
+
+// 4. FALLING PETALS
+for(let i = 0; i < 22; i++) {
+  let rose = document.createElement("div");
+  rose.className = "rose";
+  rose.innerHTML = "🌹";
+  rose.style.left = Math.random() * 100 + "vw";
+  rose.style.animationDuration = (5 + Math.random() * 8) + "s";
+  rose.style.animationDelay = (-Math.random() * 10) + "s";
+  document.body.appendChild(rose);
+}
+</script>
+
+</body>
+  </html>
+  
